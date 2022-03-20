@@ -5,6 +5,33 @@ namespace ET
 {
     public static class LoginHelper
     {
+        public static async ETTask LoginTest(Scene zoneScene, string address)
+        {
+            try
+            {
+                Session session = null;
+                R2C_LoginTest r2CLoginTest = null;
+                try
+                {
+                    session = zoneScene.GetComponent<NetKcpComponent>().Create(NetworkHelper.ToIPEndPoint(address));
+                    
+                    r2CLoginTest = (R2C_LoginTest)await session.Call(new C2R_LoginTest() { Account = "", Password = "" });
+                    Log.Debug(r2CLoginTest.Key);
+                    session.Send(new C2R_SayHello(){Hello = "Hello Server!"});
+
+                    await TimerComponent.Instance.WaitAsync(2000);
+                }
+                finally
+                {
+                    session?.Dispose();
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.ToString());
+            }
+        }
+        
         public static async ETTask Login(Scene zoneScene, string address, string account, string password)
         {
             try
