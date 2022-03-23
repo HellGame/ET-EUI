@@ -28,7 +28,10 @@ namespace ET
                 return a2CLoginAccount.Error;
             }
 
-            zoneScene.GetComponent<SessionComponent>().Session = accountSession;
+            zoneScene.AddComponent<SessionComponent>().Session = accountSession;
+            
+            zoneScene.GetComponent<AccountInfoComponent>().Token = a2CLoginAccount.Token;
+            zoneScene.GetComponent<AccountInfoComponent>().AccountId = a2CLoginAccount.AccountId;
 
             return ErrorCode.ERR_Success;
         }

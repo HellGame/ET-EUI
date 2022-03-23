@@ -14,6 +14,11 @@ namespace ET
         // 110000 - 200000是抛异常的错误
         // 200001以上不抛异常
 
-        public const int ERR_NetWorkError = 200001;
+        public const int ERR_NetWorkError            = 200002; // 网络错误
+        public const int ERR_LoginInfoIsNull         = 200003; // 登陆信息错误
+        public const int ERR_AccountNameFormError    = 200004; // 账户名必须为字母和数字的组合，长度为6-15。
+        public const int ERR_PasswordFormError       = 200005; // 密码格式错误
+        public const int Err_AccountInBlackListError = 200006; // 账号处于黑名单中
+        public const int Err_LoginPasswordError      = 200007; // 登陆密码错误
     }
 }
