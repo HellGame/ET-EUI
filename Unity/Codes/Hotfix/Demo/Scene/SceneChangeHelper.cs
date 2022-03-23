@@ -1,4 +1,6 @@
-﻿namespace ET
+﻿using System;
+
+namespace ET
 {
     public static class SceneChangeHelper
     {
@@ -27,6 +29,19 @@
 
             // 通知等待场景切换的协程
             zoneScene.GetComponent<ObjectWait>().Notify(new WaitType.Wait_SceneChangeFinish());
+
+            try
+            {
+                Session session = zoneScene.GetComponent<SessionComponent>().Session;
+                var m2cTestActorLocationResponse = (M2C_TestActorLocationResponse)await session.Call(new C2M_TestActorLocationRequest() { Content = "11111" });
+                Log.Warning(m2cTestActorLocationResponse.Content);
+                
+                session.Send(new C2M_TestActorLocationMessage(){Content = "22222222"});
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.ToString());
+            }
         }
     }
 }

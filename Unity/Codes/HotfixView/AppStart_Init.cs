@@ -23,6 +23,7 @@ namespace ET
             
             Game.Scene.AddComponent<GlobalComponent>();
 
+            Game.Scene.AddComponent<NumericWatcherComponent>();
             Game.Scene.AddComponent<AIDispatcherComponent>();
             await ResourcesComponent.Instance.LoadBundleAsync("unit.unity3d");
             

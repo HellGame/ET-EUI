@@ -22,13 +22,13 @@ namespace ET
 		
 		public static void OnLoginClickHandler(this DlgLogin self)
 		{
-			// LoginHelper.Login(
-			// 	self.DomainScene(), 
-			// 	ConstValue.LoginAddress, 
-			// 	self.View.E_AccountInputField.GetComponent<InputField>().text, 
-			// 	self.View.E_PasswordInputField.GetComponent<InputField>().text).Coroutine();
+			LoginHelper.Login(
+				self.DomainScene(), 
+				ConstValue.LoginAddress, 
+				self.View.E_AccountInputField.GetComponent<InputField>().text, 
+				self.View.E_PasswordInputField.GetComponent<InputField>().text).Coroutine();
 			
-			LoginHelper.LoginTest(self.DomainScene(), ConstValue.LoginAddress).Coroutine();
+			// LoginHelper.LoginTest(self.DomainScene(), ConstValue.LoginAddress).Coroutine();
 		}
 		
 		public static void HideWindow(this DlgLogin self)
