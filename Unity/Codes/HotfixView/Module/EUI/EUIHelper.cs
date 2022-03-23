@@ -155,22 +155,26 @@ namespace ET
         
   #region UI按钮事件
 
-        private static bool isClicked = false;
         public static void AddListenerAsync(this Button button, Func<ETTask> action)
         {
             button.onClick.RemoveAllListeners();
 
             async ETTask clickActionAsync()
             {
-                isClicked = true;
+                UIEventComponent.Instance?.SetUIClicked(true);
                 // action 里有异常处理，防止出错后 isClicked = false; 没有调用。
                 await action();
-                isClicked = false;
+                UIEventComponent.Instance?.SetUIClicked(false);
             }
             
             button.onClick.AddListener(() =>
             {
-                if (isClicked)
+                if (UIEventComponent.Instance == null)
+                {
+                    return;
+                }
+
+                if (UIEventComponent.Instance.IsClicked)
                 {
                     return;
                 }
