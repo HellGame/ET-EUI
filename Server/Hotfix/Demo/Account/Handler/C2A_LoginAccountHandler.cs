@@ -73,7 +73,7 @@ namespace ET
                             response.Error = ErrorCode.ERR_LoginPasswordError;
                             reply();
                             session.Disconnect().Coroutine();
-                            account?.Dispose();
+                            account?.Dispose(); 
                             return;
                         }
                     }
@@ -86,6 +86,20 @@ namespace ET
                         account.AccountType = (int)AccountType.General;
                         await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Save<Account>(account);
                     }
+                    
+                    // 重复登陆的话，将之前登陆的玩家踢下线。
+                    long accountSessionInstanceId = session.DomainScene().GetComponent<AccountSessionsComponent>().Get(account.Id);
+                    Session otherSession = Game.EventSystem.Get(accountSessionInstanceId) as Session;
+                    otherSession?.Send(new A2C_Disconnect()
+                    {
+                        Error = 0
+                    });
+                    otherSession?.Disconnect().Coroutine();
+                    
+                    // 记录新的Id
+                    session.DomainScene().GetComponent<AccountSessionsComponent>().Add(account.Id, session.InstanceId);
+                    // 10分钟后断开连接
+                    session.AddComponent<AccountCheckOutTimeComponent, long>(account.Id);
 
                     string token = $"{TimeHelper.ServerNow()}{RandomHelper.RandomNumber(int.MinValue, int.MaxValue)}";
                     session.DomainScene().GetComponent<TokenComponent>().Remove(account.Id);
