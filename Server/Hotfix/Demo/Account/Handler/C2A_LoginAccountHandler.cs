@@ -86,6 +86,19 @@ namespace ET
                         account.AccountType = (int)AccountType.General;
                         await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Save<Account>(account);
                     }
+
+                    // 向登录中心服查询是否已经登录
+                    StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), "LoginCenter");
+                    long loginCenterInstanceId = startSceneConfig.InstanceId;
+                    var loginAccountResponse = (L2A_LoginAccountResponse)await MessageHelper.CallActor(loginCenterInstanceId, new A2L_LoginAccountRequest() { AccountId = account.Id });
+                    if (loginAccountResponse.Error != ErrorCode.ERR_Success)
+                    {
+                        response.Error = loginAccountResponse.Error;
+                        reply();
+                        session?.Disconnect().Coroutine();
+                        account?.Dispose();
+                        return;
+                    }
                     
                     // 重复登陆的话，将之前登陆的玩家踢下线。
                     long accountSessionInstanceId = session.DomainScene().GetComponent<AccountSessionsComponent>().Get(account.Id);
