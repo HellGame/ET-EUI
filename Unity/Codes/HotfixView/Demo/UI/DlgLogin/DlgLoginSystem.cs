@@ -35,6 +35,10 @@ namespace ET
 					Log.Error(errorCode.ToString());
 					return;
 				}
+
+				UIComponent uiComponent = self.DomainScene().GetComponent<UIComponent>();
+				uiComponent.HideWindow(WindowID.WindowID_Login);
+				uiComponent.ShowWindow(WindowID.WindowID_Lobby);
 			}
 			catch (Exception e)
 			{
