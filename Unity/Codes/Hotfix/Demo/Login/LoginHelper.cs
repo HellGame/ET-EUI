@@ -37,5 +37,35 @@ namespace ET
 
             return ErrorCode.ERR_Success;
         }
+
+        public static async ETTask<int> GetServerList(Scene zoneScene)
+        {
+            A2C_GetServerInfos a2CGetServerInfos = null;
+
+            try
+            {
+                Session session = zoneScene.GetComponent<SessionComponent>().Session;
+                AccountInfoComponent accountInfoComponent = zoneScene.GetComponent<AccountInfoComponent>();
+                a2CGetServerInfos = (A2C_GetServerInfos) await session.Call(new C2A_GetServerInfos()
+                {
+                    AccountId = accountInfoComponent.AccountId, 
+                    Token = accountInfoComponent.Token
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            foreach (var serverInfoProto in a2CGetServerInfos.ServerInfoList)
+            {
+                ServerInfo serverInfo = zoneScene.GetComponent<ServerInfosComponent>().AddChild<ServerInfo>();
+                serverInfo.FromMessage(serverInfoProto);
+                zoneScene.GetComponent<ServerInfosComponent>().Add(serverInfo);
+            }
+
+            return ErrorCode.ERR_Success;
+        }
     }
 }
