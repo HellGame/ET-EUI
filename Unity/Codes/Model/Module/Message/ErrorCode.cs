@@ -22,5 +22,7 @@ namespace ET
         public const int ERR_LoginPasswordError      = 200007; // 登陆密码错误
         public const int ERR_RequestRepeatedly       = 200008; // 重复发送请求
         public const int ERR_TokenError              = 200009; // 令牌 Token 错误
+        public const int ERR_RoleNameIsNull          = 200010; // 角色名为空
+        public const int ERR_RoleNameSame            = 200011; // 角色名为空
     }
 }
