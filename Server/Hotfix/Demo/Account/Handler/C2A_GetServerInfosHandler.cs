@@ -18,6 +18,7 @@ namespace ET
             {
                 response.Error = ErrorCode.ERR_TokenError;
                 reply();
+                session?.Disconnect().Coroutine();
                 return;
             }
 

@@ -6,7 +6,7 @@ namespace ET
     {
         public override void Awake(ServerInfoManagerComponent self)
         {
-            self.Awake();
+            self.Awake().Coroutine();
         }
     }
     
@@ -26,7 +26,7 @@ namespace ET
     {
         public override void Load(ServerInfoManagerComponent self)
         {
-            self.Awake();
+            self.Awake().Coroutine();
         }
     }
 

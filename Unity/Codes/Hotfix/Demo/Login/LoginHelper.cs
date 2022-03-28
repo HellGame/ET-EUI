@@ -54,8 +54,13 @@ namespace ET
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                Log.Error(e.ToString());
+                return ErrorCode.ERR_NetWorkError;
+            }
+
+            if (a2CGetServerInfos.Error != ErrorCode.ERR_Success)
+            {
+                return a2CGetServerInfos.Error;
             }
 
             foreach (var serverInfoProto in a2CGetServerInfos.ServerInfoList)
