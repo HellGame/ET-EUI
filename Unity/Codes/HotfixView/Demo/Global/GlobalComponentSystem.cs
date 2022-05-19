@@ -1,3 +1,4 @@
+using FairyGUI;
 using UnityEngine;
 
 namespace ET
@@ -17,6 +18,24 @@ namespace ET
             self.FixedRoot = GameObject.Find("Global/UIRoot/FixedRoot").transform;
             self.OtherRoot = GameObject.Find("Global/UIRoot/OtherRoot").transform;
             self.PoolRoot =  GameObject.Find("Global/PoolRoot").transform;
+
+            self.GRoot = GRoot.inst;
+
+            self.NormalGRoot = new GComponent();
+            self.NormalGRoot.gameObjectName = "NormalGRoot";
+            GRoot.inst.AddChild(self.NormalGRoot);
+            
+            self.PopUpGRoot = new GComponent();
+            self.PopUpGRoot.gameObjectName = "PopUpGRoot";
+            GRoot.inst.AddChild(self.PopUpGRoot);
+            
+            self.FixedGRoot = new GComponent();
+            self.FixedGRoot.gameObjectName = "FixedGRoot";
+            GRoot.inst.AddChild(self.FixedGRoot);
+            
+            self.OtherGRoot = new GComponent();
+            self.OtherGRoot.gameObjectName = "OtherGRoot";
+            GRoot.inst.AddChild(self.OtherGRoot);
         }
     }
 }

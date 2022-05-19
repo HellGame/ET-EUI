@@ -1,3 +1,4 @@
+using FairyGUI;
 using UnityEngine;
 
 namespace ET
@@ -14,5 +15,11 @@ namespace ET
         public Transform FixedRoot{ get; set; }
         public Transform PoolRoot{ get; set; }
         public Transform OtherRoot{ get; set; }
+        
+        public GComponent GRoot{ get; set; }
+        public GComponent NormalGRoot{ get; set; }
+        public GComponent PopUpGRoot{ get; set; }
+        public GComponent FixedGRoot{ get; set; }
+        public GComponent OtherGRoot{ get; set; }
     }
 }

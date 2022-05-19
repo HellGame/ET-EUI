@@ -1,17 +1,21 @@
 namespace ET
 {
-    public class AfterCreateZoneScene_AddComponent: AEvent<EventType.AfterCreateZoneScene>
+    public class AfterCreateZoneScene_AddComponent: AEventAsync<EventType.AfterCreateZoneScene>
     {
-        protected override  void Run(EventType.AfterCreateZoneScene args)
+        protected override async ETTask Run(EventType.AfterCreateZoneScene args)
         {
             Scene zoneScene = args.ZoneScene;
-            zoneScene.AddComponent<UIComponent>();
-            zoneScene.AddComponent<UIPathComponent>();
-            zoneScene.AddComponent<UIEventComponent>();
-            zoneScene.AddComponent<RedDotComponent>();
+            // zoneScene.AddComponent<UIComponent>();
+            // zoneScene.AddComponent<UIPathComponent>();
+            // zoneScene.AddComponent<UIEventComponent>();
+            // zoneScene.AddComponent<RedDotComponent>();
+
             zoneScene.AddComponent<ResourcesLoaderComponent>();
+            await zoneScene.AddComponent<GameResLoaderComponent>().LoadAsync();
+            zoneScene.AddComponent<FUIEventComponent>();
+            zoneScene.AddComponent<FUIComponent>();
         
-            zoneScene.GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Login);
+            await zoneScene.GetComponent<FUIComponent>().ShowPanelAsync(PanelId.LoginPanel);
         }
     }
 }
