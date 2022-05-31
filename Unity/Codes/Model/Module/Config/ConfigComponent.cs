@@ -8,10 +8,8 @@ namespace ET
     /// </summary>
     public class ConfigComponent: Entity, IAwake, IDestroy
     {
-        public IConfigLoader ConfigLoader;
-        
         public static ConfigComponent Instance;
-		
-        public Dictionary<Type, object> AllConfig = new Dictionary<Type, object>();
+        
+        public Tables Tables { get; set; }
     }
 }
