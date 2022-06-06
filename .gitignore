@@ -50,12 +50,12 @@ Server/.DS_Store
 /Unity/.gradle
 /*.user
 /ToolsApp/
-/Unity/Unity.Editor.csproj
 /Unity/Assets/Bundles/Code/Code.dll.bytes
 /Unity/Assets/Bundles/Code/Code.dll.bytes.meta
 /Unity/Assets/Bundles/Code/Code.pdb.bytes
 /Unity/Assets/Bundles/Code/Code.pdb.bytes.meta
-/Unity/Assembly-CSharp.csproj
+/*.csproj
+/*.sln
 /Excel/~$*.xlsx
 /.vscode
 Unity_clone_0

@@ -12,11 +12,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{6e8e66a2-0be3-e495-3a31-56632ea60505}</ProjectGuid>
+    <ProjectGuid>{041131cd-3018-19b1-81b6-5dbee2467ffb}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>ParrelSync</AssemblyName>
+    <AssemblyName>Unity.Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -30,8 +30,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169,0649</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -41,20 +41,50 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\Project.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\ClonesManagerWindow.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\AssetModBlock\ParrelSyncAssetModificationProcessor.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\ClonesManager.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\ValidateCopiedFoldersIntegrity.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\NonCore\AskFeedbackDialog.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\AssetModBlock\EditorQuit.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\Preferences.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\ExternalLinks.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\NonCore\OtherMenuItem.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\UpdateChecker.cs" />
-     <Compile Include="Assets\ParrelSync\ParrelSync\Editor\FileUtilities.cs" />
-     <None Include="Assets\ParrelSync\ParrelSync\package.json" />
-     <None Include="Assets\ParrelSync\ParrelSync\projectCloner.asmdef" />
+     <Compile Include="Assets\Editor\EUI\LoopScroll\SGMenuOptions.cs" />
+     <Compile Include="Assets\Editor\BuildEditor\BuildHelper.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\FloatTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\LongTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawerAttribute.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\AnimationCurveTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\Helper\ShellHelper.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\ComponentViewEditor.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\Vector4TypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\IntTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\EUI\LoopScroll\SGDefaultControls.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\BoolTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\DateTimeTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\Entity\EditorLayout.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\Vector3TypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ServerCommandLineEditor\ServerCommandLineEditor.cs" />
+     <Compile Include="Assets\Editor\Helper\EditorResHelper.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\DoubleTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\EUI\LoopScroll\LoopScrollRectDefaultControls1.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\StringTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\RecastNavDataExporter\NavMeshExporter.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\Vector2TypeDrawer.cs" />
+     <Compile Include="Assets\Editor\EUI\LoopScroll\LoopScrollRectInspector.cs" />
+     <Compile Include="Assets\Editor\ReferenceCollectorEditor\ReferenceCollectorEditor.cs" />
+     <Compile Include="Assets\Editor\BuildEditor\BuildEditor.cs" />
+     <Compile Include="Assets\Editor\EUI\UIEditorController.cs" />
+     <Compile Include="Assets\Editor\EUI\UICodeSpawn\LoopScrollItemCodeSpawner.cs" />
+     <Compile Include="Assets\Editor\BuildEditor\ETBuildSettings.cs" />
+     <Compile Include="Assets\Editor\EUI\UICodeSpawn\SubUICodeSapwner.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\CharTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\EnumTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\BoundsTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\RectTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ToolEditor\ToolsEditor.cs" />
+     <Compile Include="Assets\Editor\EUI\LoopScroll\LoopScrollRectDefaultControls.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\ITypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\ColorTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\ILRuntimeEditor\ILRuntimeCLRBinding.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\Entity\SerializationTypeExtension.cs" />
+     <Compile Include="Assets\Editor\BuildEditor\BuildAssemblieEditor.cs" />
+     <Compile Include="Assets\Editor\ComponentViewEditor\TypeDrawer\UnityObjectTypeDrawer.cs" />
+     <Compile Include="Assets\Editor\EUI\UICodeSpawn\UICodeSpawner.cs" />
+     <None Include="Assets\Editor\Unity.Editor.asmdef" />
+     <None Include="Assets\Editor\csc.rsp" />
      <Reference Include="UnityEngine">
      <HintPath>/Applications/Unity/Hub/Editor/2020.3.27f1c1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
@@ -663,6 +693,14 @@
      </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Unity.Mono.csproj">
+      <Project>{5910fa29-5797-199c-985b-fc9fc473328e}</Project>
+      <Name>Unity.Mono</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.ThirdParty.csproj">
+      <Project>{d2ad5be1-263a-9a30-ab0f-dc5b08044350}</Project>
+      <Name>Unity.ThirdParty</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
