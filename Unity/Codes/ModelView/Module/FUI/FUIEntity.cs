@@ -20,7 +20,7 @@ namespace ET
             {
                 if (this.panelId == PanelId.Invalid)
                 {
-                    Log.Error("window id is " + PanelId.Invalid);
+                    Log.Error("Panel id is " + PanelId.Invalid);
                 }
                 return this.panelId;
             }

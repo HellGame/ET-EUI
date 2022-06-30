@@ -15,6 +15,9 @@ namespace FUIEditor
         private const string ClassNamePrefix = "FUI_";
         
         private const string SpawnCodeDir = "../Unity/Codes/ModelView/Demo/FUIAutoGen/";
+
+        // 不生成使用默认名称的成员
+        private const bool IgnoreDefaultVariableName = true;
         
         private static readonly Dictionary<string, PackageInfo> PackageInfos = new Dictionary<string, PackageInfo>();
 
@@ -132,7 +135,7 @@ namespace FUIEditor
                     componentInfo.ControllerList.Add(element);
                 }
                 else if (element.name == "relation")
-                {
+                { 
                     
                 }
                 else
@@ -210,8 +213,14 @@ namespace FUIEditor
             Debug.Log(sb.ToString());
         }
 
-        private static readonly List<string> TypeNames = new List<string>();
-        private static readonly List<string> VariableNames = new List<string>();
+        private class VariableInfo
+        {
+            public string TypeName;
+            public string VariableName;
+            public bool IsParentName;
+            public bool IsDefaultName;
+        }
+        private static readonly List<VariableInfo> VariableInfos = new List<VariableInfo>();
         private static readonly List<string> ControllerNames = new List<string>();
         private static readonly Dictionary<string, List<string>> ControllerPageNames = new Dictionary<string, List<string>>();
         private static void SpawnCodeComponent(ComponentInfo componentInfo)
@@ -223,7 +232,7 @@ namespace FUIEditor
 
             GatherVariable(componentInfo);
 
-            if (VariableNames.Count == 0)
+            if (VariableInfos.Count == 0)
             {
                 return;
             }
@@ -257,10 +266,15 @@ namespace FUIEditor
                 sb.AppendFormat("\t\tpublic Controller {0};\n", ControllerNames[i]);
             }
             
-            for (int i = 0; i < TypeNames.Count; i++)
+            for (int i = 0; i < VariableInfos.Count; i++)
             {
-                string typeName = TypeNames[i];
-                string variableName = VariableNames[i];
+                if (IgnoreDefaultVariableName && VariableInfos[i].IsDefaultName)
+                {
+                    continue;
+                }
+                
+                string typeName = VariableInfos[i].TypeName;
+                string variableName = VariableInfos[i].VariableName;
                 sb.AppendFormat("\t\tpublic {0} {1};\n", typeName, variableName);
             }
 
@@ -280,9 +294,13 @@ namespace FUIEditor
                 sb.AppendFormat("\t\t\t{0} = GetControllerAt({1});\n", ControllerNames[i], i);
             }
             
-            for (int i = 0; i < TypeNames.Count; i++)
+            for (int i = 0; i < VariableInfos.Count; i++)
             {
-                sb.AppendFormat("\t\t\t{0} = ({1})GetChildAt({2});\n", VariableNames[i], TypeNames[i], i);
+                if (IgnoreDefaultVariableName && VariableInfos[i].IsDefaultName)
+                {
+                    continue;
+                }
+                sb.AppendFormat("\t\t\t{0} = ({1})GetChildAt({2});\n", VariableInfos[i].VariableName, VariableInfos[i].TypeName, i);
             }
             sb.AppendLine("\t\t}");
             sb.AppendLine("\t}");
@@ -337,21 +355,18 @@ namespace FUIEditor
 
         private static void GatherVariable(ComponentInfo componentInfo)
         {
-            TypeNames.Clear();
-            VariableNames.Clear();
+            VariableInfos.Clear();
 
             foreach (XML displayXML in componentInfo.DisplayList)
             {
                 string variableName = displayXML.GetAttribute("name");
-                if (displayXML.GetAttribute("id").StartsWith(variableName))
+
+                if (FUICodeSpawner.IsParentName(variableName, componentInfo.ComponentType))
                 {
                     continue;
                 }
 
-                if (!CheckVariableName(variableName, componentInfo.ComponentType))
-                {
-                    continue;
-                }
+                bool IsParentName = FUICodeSpawner.IsParentName(variableName, componentInfo.ComponentType);
 
                 string typeName = GetTypeNameByDisplayXML(displayXML);
                 if (string.IsNullOrEmpty(typeName))
@@ -359,8 +374,14 @@ namespace FUIEditor
                     continue;
                 }
 
-                VariableNames.Add(variableName);
-                TypeNames.Add(typeName);
+                bool isDefaultName = displayXML.GetAttribute("id").StartsWith(variableName);
+
+                VariableInfos.Add(new VariableInfo()
+                {
+                    TypeName = typeName,
+                    VariableName = variableName,
+                    IsDefaultName = isDefaultName
+                });
             }
         }
 
@@ -374,11 +395,11 @@ namespace FUIEditor
             return true;
         }
         
-        private static bool CheckVariableName(string variableName, ComponentType componentType)
+        private static bool IsParentName(string variableName, ComponentType componentType)
         {
             if (variableName == "icon" || variableName == "text")
             {
-                return false;
+                return true;
             }
 
             switch (componentType)
@@ -390,32 +411,32 @@ namespace FUIEditor
                 case ComponentType.Label:
                     if (variableName == "title")
                     {
-                        return false;
+                        return true;
                     }
                     break;
                 case ComponentType.ProgressBar:
                     if (variableName == "bar" || variableName == "bar_v" || variableName == "ani")
                     {
-                        return false;
+                        return true;
                     }
                     break;
                 case ComponentType.ScrollBar:
                     if (variableName == "arrow1" || variableName == "arrow2" || variableName == "grip" || variableName == "bar")
                     {
-                        return false;
+                        return true;
                     }
                     break;
                 case ComponentType.Slider:
                     if (variableName == "bar" || variableName == "bar_v" || variableName == "grip" || variableName == "ani")
                     {
-                        return false;
+                        return true;
                     }
                     break;
                 default:
                     throw new Exception("没有处理这种类型: {0}".Fmt(componentType));
             }
 
-            return true;
+            return false;
         }
         
         private static string GetTypeNameByDisplayXML(XML displayXML)
@@ -444,7 +465,7 @@ namespace FUIEditor
                 ObjectType objectType = displayXML.GetAttribute("input") == "true" ? ObjectType.textinput : ObjectType.textfield;
                 typeName = ObjectTypeToClassType[objectType];
             }
-            else if (displayXML.name == "group")
+            else if (displayXML.name == "group") 
             {
                 if (displayXML.GetAttribute("advanced") != "true")
                 {
