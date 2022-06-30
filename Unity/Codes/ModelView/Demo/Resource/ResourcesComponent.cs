@@ -636,7 +636,7 @@ namespace ET
             return sb.ToString();
         }
     }
-    
+    [ComponentOf(typeof(Scene))]
     public class ResourcesComponent: Entity, IAwake, IDestroy
     {
         public static ResourcesComponent Instance { get; set; }
